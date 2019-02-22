@@ -3,20 +3,6 @@
 <wsdl:definitions name="WebServiceName" targetNamespace="http://mycompany.com/ejercicio/cxf" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://mycompany.com/ejercicio/cxf" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
     <wsdl:types>
         <xs:schema elementFormDefault="qualified" targetNamespace="http://mycompany.com/ejercicio/cxf">
-            <xs:element name="InputType">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="input" type="xs:string" />
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="OutputType">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="output" type="xs:string" />
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
             <xs:complexType name="user">
                 <xs:sequence>
                     <xs:element name="id" type="xs:int" />

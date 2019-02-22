@@ -24,3 +24,5 @@ HELP.md
 /nbdist/
 /.nb-gradle/
 /build/
+
+src/main/java/com/mycompany/ejercicio/cxf/

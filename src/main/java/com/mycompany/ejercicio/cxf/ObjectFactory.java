@@ -30,22 +30,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link InputType }
-     * 
-     */
-    public InputType createInputType() {
-        return new InputType();
-    }
-
-    /**
-     * Create an instance of {@link OutputType }
-     * 
-     */
-    public OutputType createOutputType() {
-        return new OutputType();
-    }
-
-    /**
      * Create an instance of {@link User }
      * 
      */

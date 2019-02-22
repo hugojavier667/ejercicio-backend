@@ -22,6 +22,7 @@
                 }
             },
             "required": [
+                "id",
                 "login",
                 "email",
                 "name"
@@ -42,6 +43,7 @@
                 }
             },
             "required": [
+                "id",
                 "name",
                 "description"
             ]
