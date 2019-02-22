@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Created with Liquid Studio 2018 (https://www.liquid-technologies.com)-->
+<xs:schema xmlns:tns="http://mycompany.com/xml/ejercicio" elementFormDefault="qualified" targetNamespace="http://mycompany.com/xml/ejercicio" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType name="user">
+        <xs:sequence>
+            <xs:element name="login" type="xs:string" />
+            <xs:element name="email" type="xs:string" />
+            <xs:element name="name" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:int" />
+    </xs:complexType>
+    <xs:complexType name="role">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" />
+            <xs:element name="description" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:int" />
+    </xs:complexType>
+    <xs:element name="UsersListResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="users" type="tns:user" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UsersListRequest">
+        <xs:complexType>
+            <xs:anyAttribute />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UserDetailsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:int" />
+                <xs:element name="login" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UserDetailsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="tns:user" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
