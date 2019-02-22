@@ -12,8 +12,14 @@
 
 
 spring:
-    devtools:
-        restart:
-            enabled: false
-        livereload:
-            enabled: false
+    datasource:
+        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        url: jdbc:sqlserver://localhost;databaseName=ejercicio
+        username: sa
+        password: Siscont6
+    jpa:
+        database-platform: org.hibernate.dialect.SQLServerDialect
+        database: SQL_SERVER
+        openInView: false
+        show_sql: true
+        generate-ddl: true

@@ -50,8 +50,15 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.2-1002-jdbc4</version>
+			<version>9.3-1100-jdbc41</version>
 		</dependency>
+        <!-- Microsoft JDBC -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>4.0</version>
+            <type>jar</type>
+        </dependency>
 
 	</dependencies>
 

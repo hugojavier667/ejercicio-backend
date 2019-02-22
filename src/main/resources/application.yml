@@ -17,4 +17,18 @@ spring:
         name: Ejercicio
     profiles:
         active: db
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/ejercicio
+        username: postgres
+        password: postgres
+    jpa:
+        hibernate:
+        ddl-auto: create
+        naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        database: postgresql
+        openInView: false
+        show_sql: true
+        generate-ddl: true
 
