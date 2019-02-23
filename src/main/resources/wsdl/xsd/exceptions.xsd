@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns="http://mycompany.com/ejercicio/cxf/exception" xmlns:exception="http://mycompany.com/ejercicio/cxf/exception" targetNamespace="http://mycompany.com/ejercicio/cxf/exception" elementFormDefault="qualified" version="1.0">
+	<s:element name="UserException">
+		<s:complexType>
+			<s:sequence/>
+		</s:complexType>
+	</s:element>
+	<s:element name="RoleException">
+		<s:complexType>
+			<s:sequence/>
+		</s:complexType>
+	</s:element>
+</s:schema>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- editado con XMLSpy v2019 sp2 (x64) (http://www.altova.com) por Hugo (Test) -->
+<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns="http://mycompany.com/ejercicio/cxf/user" xmlns:datatypes="http://mycompany.com/ejercicio/cxf/datatypes" xmlns:user="http://mycompany.com/ejercicio/cxf/user" targetNamespace="http://mycompany.com/ejercicio/cxf/user" elementFormDefault="qualified" version="1.0">
+	<s:import namespace="http://mycompany.com/ejercicio/cxf/datatypes" schemaLocation="datatypes.xsd"/>
+	<s:element name="GetUserByLogin">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="UserRequest" type="user:UserRequest"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="UserRequest">
+		<s:sequence>
+			<s:element name="login" type="s:string" minOccurs="1" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="GetUserByLoginResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="GetUserByLoginResult" type="user:UserReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="UserReturn">
+		<s:sequence>
+			<s:element name="Success" type="s:boolean" minOccurs="1" maxOccurs="1"/>
+			<s:element name="ErrorCode" type="s:int" minOccurs="0" maxOccurs="1"/>
+			<s:element name="ErrorMessage" type="s:string" minOccurs="0" maxOccurs="1"/>
+			<s:element name="UserResult" type="datatypes:User" minOccurs="0" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="UsersReturn">
+		<s:sequence>
+			<s:element name="Success" type="s:boolean" minOccurs="1" maxOccurs="1"/>
+			<s:element name="ErrorCode" type="s:int" minOccurs="0" maxOccurs="1"/>
+			<s:element name="ErrorMessage" type="s:string" minOccurs="0" maxOccurs="1"/>
+			<s:element name="UsersResult" type="datatypes:ArrayOfUser" minOccurs="0" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="GetUsers">
+		<s:complexType>
+			<s:sequence/>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetUsersResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="GetUsersResult" type="user:UsersReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="AddUser">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="AddUserRequest" type="user:AddUserRequest"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="AddUserRequest">
+		<s:sequence>
+			<s:element name="User" type="datatypes:User"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UpdateUser">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="UpdateUserRequest" type="user:UpdateUserRequest"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="UpdateUserRequest">
+		<s:sequence>
+			<s:element name="User" type="datatypes:User"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="AddUserResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="AddUserResult" type="user:AddUserReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="UpdateUserResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="UpdateUserResult" type="user:AddUserReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="AddUserReturn">
+		<s:sequence>
+			<s:element name="Success" type="s:boolean" minOccurs="1" maxOccurs="1"/>
+			<s:element name="ErrorCode" type="s:int" minOccurs="0" maxOccurs="1"/>
+			<s:element name="ErrorMessage" type="s:string" minOccurs="0" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="DeleteUser">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="DeleteUserRequest" type="user:DeleteUserRequest"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="DeleteUserRequest">
+		<s:sequence>
+			<s:element name="login" type="s:string" minOccurs="1" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="DeleteUserResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="DeleteUserResult" type="user:DeleteUserReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="DeleteUserReturn">
+		<s:sequence>
+			<s:element name="Success" type="s:boolean" minOccurs="1" maxOccurs="1"/>
+			<s:element name="ErrorCode" type="s:int" minOccurs="0" maxOccurs="1"/>
+			<s:element name="ErrorMessage" type="s:string" minOccurs="0" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+</s:schema>

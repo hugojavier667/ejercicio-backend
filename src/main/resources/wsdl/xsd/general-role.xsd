@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- editado con XMLSpy v2019 sp2 (x64) (http://www.altova.com) por Hugo (Test) -->
+<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns="http://mycompany.com/ejercicio/cxf/role" xmlns:datatypes="http://mycompany.com/ejercicio/cxf/datatypes" xmlns:role="http://mycompany.com/ejercicio/cxf/role" targetNamespace="http://mycompany.com/ejercicio/cxf/role" elementFormDefault="qualified" version="1.0">
+	<s:import namespace="http://mycompany.com/ejercicio/cxf/datatypes" schemaLocation="datatypes.xsd"/>
+	<s:element name="GetRoleByName">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="RoleRequest" type="role:RoleRequest"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="RoleRequest">
+		<s:sequence>
+			<s:element name="name" type="s:string" minOccurs="1" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="GetRoleByNameResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="GetRoleByNameResult" type="role:RoleReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="RoleReturn">
+		<s:sequence>
+			<s:element name="Success" type="s:boolean" minOccurs="1" maxOccurs="1"/>
+			<s:element name="ErrorCode" type="s:int" minOccurs="0" maxOccurs="1"/>
+			<s:element name="ErrorMessage" type="s:string" minOccurs="0" maxOccurs="1"/>
+			<s:element name="RoleResult" type="datatypes:Role" minOccurs="0" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="RolesReturn">
+		<s:sequence>
+			<s:element name="Success" type="s:boolean" minOccurs="1" maxOccurs="1"/>
+			<s:element name="ErrorCode" type="s:int" minOccurs="0" maxOccurs="1"/>
+			<s:element name="ErrorMessage" type="s:string" minOccurs="0" maxOccurs="1"/>
+			<s:element name="RolesResult" type="datatypes:ArrayOfRole" minOccurs="0" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="GetRoles">
+		<s:complexType>
+			<s:sequence/>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetRolesResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="GetRolesResult" type="role:RolesReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="AddRole">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="AddRoleRequest" type="role:AddRoleRequest"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="AddRoleRequest">
+		<s:sequence>
+			<s:element name="Role" type="datatypes:Role"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="AddRoleResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="AddRoleResult" type="role:AddRoleReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="AddRoleReturn">
+		<s:sequence>
+			<s:element name="Success" type="s:boolean" minOccurs="1" maxOccurs="1"/>
+			<s:element name="ErrorCode" type="s:int" minOccurs="0" maxOccurs="1"/>
+			<s:element name="ErrorMessage" type="s:string" minOccurs="0" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UpdateRole">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="UpdateRoleRequest" type="role:UpdateRoleRequest"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="UpdateRoleRequest">
+		<s:sequence>
+			<s:element name="Role" type="datatypes:Role"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UpdateRoleResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="UpdateRoleResult" type="role:AddRoleReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="DeleteRole">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="DeleteRoleRequest" type="role:DeleteRoleRequest"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="DeleteRoleRequest">
+		<s:sequence>
+			<s:element name="name" type="s:string" minOccurs="1" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="DeleteRoleResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element name="DeleteRoleResult" type="role:DeleteRoleReturn"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="DeleteRoleReturn">
+		<s:sequence>
+			<s:element name="Success" type="s:boolean" minOccurs="1" maxOccurs="1"/>
+			<s:element name="ErrorCode" type="s:int" minOccurs="0" maxOccurs="1"/>
+			<s:element name="ErrorMessage" type="s:string" minOccurs="0" maxOccurs="1"/>
+		</s:sequence>
+	</s:complexType>
+</s:schema>
