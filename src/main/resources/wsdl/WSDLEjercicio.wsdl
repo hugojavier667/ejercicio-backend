@@ -1,97 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- editado con XMLSpy v2019 sp2 (x64) (http://www.altova.com) por Hugo (Test) -->
-<!--Created with Liquid Studio 2018 (https://www.liquid-technologies.com)-->
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://mycompany.com/ejercicio/cxf" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="WebServiceName" targetNamespace="http://mycompany.com/ejercicio/cxf">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://mycompany.com/ejercicio/cxf" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:datatypes="http://mycompany.com/ejercicio/cxf/datatypes" xmlns:datatypes1="http://www.w3.org/2005/05/xmlmime" xmlns:exception="http://mycompany.com/ejercicio/cxf/exception" xmlns:role="http://mycompany.com/ejercicio/cxf/role" xmlns:user="http://mycompany.com/ejercicio/cxf/user" name="WebServiceName" targetNamespace="http://mycompany.com/ejercicio/cxf">
 	<wsdl:types>
-		<xs:schema elementFormDefault="qualified" targetNamespace="http://mycompany.com/ejercicio/cxf">
-			<xs:complexType name="user">
-				<xs:sequence>
-					<xs:element name="id" type="xs:int"/>
-					<xs:element name="login" type="xs:string"/>
-					<xs:element name="email" type="xs:string"/>
-					<xs:element name="name" type="xs:string"/>
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="role">
-				<xs:sequence>
-					<xs:element name="id" type="xs:int"/>
-					<xs:element name="name" type="xs:string"/>
-					<xs:element name="description" type="xs:string"/>
-				</xs:sequence>
-			</xs:complexType>
-		</xs:schema>
+		<xsi:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema" targetNamespace="http://mycompany.com/ejercicio/cxf" elementFormDefault="qualified">
+			<xsi:include schemaLocation="EjercicioXSD.xsd"/>
+		</xsi:schema>
 	</wsdl:types>
 	<wsdl:message name="getUserDetailsSoapIn">
-		<wsdl:part name="id" type="xs:int"/>
+		<wsdl:part name="parameters" element="user:GetUserByLogin"/>
 	</wsdl:message>
 	<wsdl:message name="getUserDetailsSoapOut">
-		<wsdl:part name="user" type="tns:user"/>
-	</wsdl:message>
-	<wsdl:message name="getAllUsersSoapOut">
-		<wsdl:part name="NewPart" type="tns:user"/>
+		<wsdl:part name="parameters" element="user:GetUserByLoginResponse"/>
 	</wsdl:message>
 	<wsdl:message name="getRoleDetailsSoapIn">
-		<wsdl:part name="id" type="xs:int"/>
+		<wsdl:part name="parameters" element="role:GetRoleByName"/>
 	</wsdl:message>
 	<wsdl:message name="getRoleDetailsSoapOut">
-		<wsdl:part name="role" type="tns:role"/>
+		<wsdl:part name="parameters" element="role:GetRoleByNameResponse"/>
 	</wsdl:message>
 	<wsdl:message name="createuserSoapIn">
-		<wsdl:part name="user" type="tns:user"/>
+		<wsdl:part name="parameters" element="user:AddUser"/>
 	</wsdl:message>
 	<wsdl:message name="createuserSoapOut">
-		<wsdl:part name="user" type="tns:user"/>
+		<wsdl:part name="parameters" element="user:AddUserResponse"/>
 	</wsdl:message>
-	<wsdl:message name="getAllUsersHttpGetOut">
-		<wsdl:part name="Body" type="tns:user"/>
+	<wsdl:message name="MensajeNuevo">
+		<wsdl:part name="parameter" type="xs:string"/>
 	</wsdl:message>
-	<wsdl:message name="getAllUsersHttpGetIn"/>
-	<wsdl:message name="getAllUsersSoapIn"/>
+	<wsdl:message name="UserExcepction">
+		<wsdl:part name="parameter" element="exception:UserException"/>
+	</wsdl:message>
+	<wsdl:message name="RoleExcepction">
+		<wsdl:part name="parameter" element="exception:RoleException"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUserSoapIn">
+		<wsdl:part name="parameter" element="user:DeleteUser"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUserSoapOut">
+		<wsdl:part name="parameter" element="user:DeleteUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsersSoapIn">
+		<wsdl:part name="parameter" element="user:GetUsers"/>
+	</wsdl:message>
+	<wsdl:message name="GetUsersSoapOut">
+		<wsdl:part name="parameter" element="user:GetUsersResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateUserSoapIn">
+		<wsdl:part name="parameter" element="user:UpdateUser"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateUserSoapOut">
+		<wsdl:part name="parameter" element="user:UpdateUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="CreateRoleSoapIn">
+		<wsdl:part name="parameter" element="role:AddRole"/>
+	</wsdl:message>
+	<wsdl:message name="CreateRoleSoapOut">
+		<wsdl:part name="parameter" element="role:AddRoleResponse"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteRoleSoapIn">
+		<wsdl:part name="parameter" element="role:DeleteRole"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteRoleSoapOut">
+		<wsdl:part name="parameter" element="role:DeleteRoleResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetRolesSoapIn">
+		<wsdl:part name="parameter" element="role:GetRoles"/>
+	</wsdl:message>
+	<wsdl:message name="GetRolesSoapOut">
+		<wsdl:part name="parameter" element="role:GetRolesResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateRoleSoapIn">
+		<wsdl:part name="parameter" element="role:UpdateRole"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateRoleSoapOut">
+		<wsdl:part name="parameter" element="role:UpdateRoleResponse"/>
+	</wsdl:message>
 	<wsdl:portType name="UserServiceSoapPortType">
 		<wsdl:operation name="UserDetails">
 			<wsdl:input message="tns:getUserDetailsSoapIn"/>
 			<wsdl:output message="tns:getUserDetailsSoapOut"/>
-		</wsdl:operation>
-		<wsdl:operation name="ListAllUsers">
-			<wsdl:output message="tns:getAllUsersSoapOut"/>
-			<wsdl:input message="tns:getAllUsersSoapIn"/>
+			<wsdl:fault name="UserExcepction" message="tns:UserExcepction"/>
 		</wsdl:operation>
 		<wsdl:operation name="CreateUser">
 			<wsdl:input message="tns:createuserSoapIn"/>
 			<wsdl:output message="tns:createuserSoapOut"/>
+			<wsdl:fault name="UserExcepction" message="tns:UserExcepction"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUser">
+			<wsdl:input message="tns:DeleteUserSoapIn"/>
+			<wsdl:output message="tns:DeleteUserSoapOut"/>
+			<wsdl:fault name="UserExceptionr" message="tns:UserExcepction"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsers">
+			<wsdl:input message="tns:GetUsersSoapIn"/>
+			<wsdl:output message="tns:GetUsersSoapOut"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateUser">
+			<wsdl:input message="tns:UpdateUserSoapIn"/>
+			<wsdl:output message="tns:UpdateUserSoapOut"/>
+			<wsdl:fault name="UserException" message="tns:UserExcepction"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:portType name="RoleServiceSoapPortType">
 		<wsdl:operation name="RoleDetails">
 			<wsdl:input message="tns:getRoleDetailsSoapIn"/>
 			<wsdl:output message="tns:getRoleDetailsSoapOut"/>
+			<wsdl:fault name="RoleExcepction" message="tns:RoleExcepction"/>
 		</wsdl:operation>
-	</wsdl:portType>
-	<wsdl:portType name="UserServiceHttpGetPortType">
-		<wsdl:operation name="getAllUsers">
-			<wsdl:output message="tns:getAllUsersHttpGetOut"/>
-			<wsdl:input message="tns:getAllUsersHttpGetIn"/>
+		<wsdl:operation name="CreateRole">
+			<wsdl:input message="tns:CreateRoleSoapIn"/>
+			<wsdl:output message="tns:CreateRoleSoapOut"/>
+			<wsdl:fault name="RoleException" message="tns:RoleExcepction"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteRole">
+			<wsdl:input message="tns:DeleteRoleSoapIn"/>
+			<wsdl:output message="tns:DeleteRoleSoapOut"/>
+			<wsdl:fault name="RoleExcepction" message="tns:RoleExcepction"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetRoles">
+			<wsdl:input message="tns:GetRolesSoapIn"/>
+			<wsdl:output message="tns:GetRolesSoapOut"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateRole">
+			<wsdl:input message="tns:UpdateRoleSoapIn"/>
+			<wsdl:output message="tns:UpdateRoleSoapOut"/>
+			<wsdl:fault name="RoleException" message="tns:RoleExcepction"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="UserServiceSoapBinding" type="tns:UserServiceSoapPortType">
 		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-		<wsdl:operation name="UserDetails">
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="ListAllUsers">
-			<soap:operation soapAction="urn:#ListAllUsers" style="document"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
 		<wsdl:operation name="CreateUser">
 			<soap:operation soapAction="urn:#CreateUser" style="document"/>
 			<wsdl:input>
@@ -100,6 +137,54 @@
 			<wsdl:output>
 				<soap:body use="literal"/>
 			</wsdl:output>
+			<wsdl:fault name="UserExcepction">
+				<soap:fault name="UserExcepction" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="UserDetails">
+			<soap:operation soapAction="urn:#UserDetails" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="UserExcepction">
+				<soap:fault name="UserExcepction" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUser">
+			<soap:operation soapAction="urn:#DeleteUser" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="UserExceptionr">
+				<soap:fault name="UserExceptionr" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetUsers">
+			<soap:operation soapAction="urn:#GetUsers" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateUser">
+			<soap:operation soapAction="urn:#UpdateUser" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="UserException">
+				<soap:fault name="UserException" use="literal"/>
+			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
 	<wsdl:binding name="RoleServiceSoapBinding" type="tns:RoleServiceSoapPortType">
@@ -112,26 +197,59 @@
 			<wsdl:output>
 				<soap:body use="literal"/>
 			</wsdl:output>
+			<wsdl:fault name="RoleExcepction">
+				<soap:fault name="RoleExcepction" use="literal"/>
+			</wsdl:fault>
 		</wsdl:operation>
-	</wsdl:binding>
-	<wsdl:binding name="UserServiceHttpGetBinding" type="tns:UserServiceHttpGetPortType">
-		<http:binding verb="GET"/>
-		<wsdl:operation name="getAllUsers">
-			<http:operation location="/getAllUsers"/>
+		<wsdl:operation name="CreateRole">
+			<soap:operation soapAction="urn:#CreateRole" style="document"/>
 			<wsdl:input>
-				<http:urlEncoded/>
+				<soap:body use="literal"/>
 			</wsdl:input>
 			<wsdl:output>
-				<mime:mimeXml part="Body"/>
+				<soap:body use="literal"/>
 			</wsdl:output>
+			<wsdl:fault name="RoleException">
+				<soap:fault name="RoleException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteRole">
+			<soap:operation soapAction="urn:#DeleteRole" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="RoleExcepction">
+				<soap:fault name="RoleExcepction" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetRoles">
+			<soap:operation soapAction="urn:#GetRoles" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateRole">
+			<soap:operation soapAction="urn:#UpdateRole"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="RoleException">
+				<soap:fault name="RoleException" use="literal"/>
+			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
 	<wsdl:service name="UserService">
 		<wsdl:port name="UserServiceSoap" binding="tns:UserServiceSoapBinding">
 			<soap:address location="http://mycompany.com/ejercicio"/>
-		</wsdl:port>
-		<wsdl:port name="UserServiceHttpGet" binding="tns:UserServiceHttpGetBinding">
-			<http:address location="http://mycompany.com/ejercicio"/>
 		</wsdl:port>
 	</wsdl:service>
 	<wsdl:service name="RoleService">

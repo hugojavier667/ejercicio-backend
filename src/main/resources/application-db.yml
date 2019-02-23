@@ -18,18 +18,15 @@ spring:
         username: postgres
         password: postgres
     jpa:
+        properties:
+            hibernate:
+                temp:
+                    use_jdbc_metadata_defaults: false
         hibernate:
-            ddl-auto: create
+            ddl-auto: update
             naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
-        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        database-platform: org.hibernate.dialect.PostgreSQL9Dialect
         database: postgresql
         openInView: false
         show_sql: true
         generate-ddl: true
-    devtools:
-        restart:
-            enabled: true
-
-
-
- 

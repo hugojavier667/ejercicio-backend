@@ -1,5 +1,5 @@
 # ===================================================================
-# Spring Boot configuration for the "prod" profile.
+# Spring Boot configuration for the "ldap" profile.
 #
 # This configuration overrides the application.yml file.
 # ===================================================================
@@ -13,13 +13,20 @@
 
 spring:
     datasource:
-        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-        url: jdbc:sqlserver://localhost;databaseName=ejercicio
-        username: sa
-        password: Siscont6
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/ejercicio
+        username: postgres
+        password: postgres
     jpa:
-        database-platform: org.hibernate.dialect.SQLServerDialect
-        database: SQL_SERVER
+        properties:
+            hibernate:
+                temp:
+                    use_jdbc_metadata_defaults: false
+        hibernate:
+            ddl-auto: update
+            naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+        database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+        database: postgresql
         openInView: false
         show_sql: true
         generate-ddl: true

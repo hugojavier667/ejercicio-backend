@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:schema xmlns:customer="http://mycompany.com/ejercicio/cxf/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:datatypes="http://mycompany.com/ejercicio/cxf/datatypes" xmlns:exception="http://mycompany.com/ejercicio/cxf/exception" xmlns:user="http://mycompany.com/ejercicio/cxf/user" xmlns:role="http://mycompany.com/ejercicio/cxf/role" targetNamespace="http://mycompany.com/ejercicio/cxf" elementFormDefault="qualified" version="1.0">
+	<s:import namespace="http://mycompany.com/ejercicio/cxf/datatypes" schemaLocation="xsd/datatypes.xsd"/>
+	<s:import namespace="http://mycompany.com/ejercicio/cxf/exception" schemaLocation="xsd/exceptions.xsd"/>
+	<s:import namespace="http://mycompany.com/ejercicio/cxf/user" schemaLocation="xsd/general-user.xsd"/>
+	<s:import namespace="http://mycompany.com/ejercicio/cxf/role" schemaLocation="xsd/general-role.xsd"/>
+</s:schema>
