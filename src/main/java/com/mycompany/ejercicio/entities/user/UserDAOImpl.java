@@ -9,6 +9,7 @@ import com.mycompany.ejercicio.entities.role.RoleEntity;
 import com.mycompany.ejercicio.entities.role.RoleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,8 +30,12 @@ public class UserDAOImpl implements UserDAO {
     private ModelMapper modelMapper;
 
     @Override
-    public User findByLogin(String name) {
-        UserEntity userEntity = this.userRepository.findByLogin(name);
+    public User findByLogin(String login) throws UserExcepction {
+        UserEntity userEntity = this.userRepository.findByLogin(login);
+        if(userEntity == null){
+           throw new UserExcepction("User with login " + login + " not found!", new UserException());
+        }
+
         User user = this.convertToDto(userEntity);
         return user;
     }
@@ -51,7 +56,11 @@ public class UserDAOImpl implements UserDAO {
             List<RoleEntity> roles = this.roleRepository.findAllByNameIn(user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toList()));
             roles.forEach(roleEntity -> userEntity.addRole(roleEntity));
             this.userRepository.save(userEntity);
-        } catch (Exception e) {
+        }
+        catch (DataIntegrityViolationException dive){
+            throw new UserExcepction("A user with that login already exists.", new UserException());
+        }
+        catch (Exception e) {
             throw new UserExcepction("Error saving user", new UserException());
         }
 

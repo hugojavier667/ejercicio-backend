@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserDAO {
 
-    User findByLogin(String login);
+    User findByLogin(String login) throws UserExcepction;
 
     List<User> findAll();
 

@@ -1,5 +1,6 @@
 package com.mycompany.ejercicio.endpoint;
 
+import com.mycompany.ejercicio.cxf.RoleExcepction;
 import com.mycompany.ejercicio.cxf.datatypes.ArrayOfRole;
 import com.mycompany.ejercicio.cxf.datatypes.Role;
 import com.mycompany.ejercicio.cxf.role.*;
@@ -15,7 +16,7 @@ public class RoleServiceController {
     @Autowired
     private RoleDAO roleDAO;
 
-    public GetRoleByNameResponse getRoleByName(RoleRequest roleRequest) {
+    public GetRoleByNameResponse getRoleByName(RoleRequest roleRequest) throws RoleExcepction {
 
         RoleReturn rr = new RoleReturn();
         String name = roleRequest.getName();

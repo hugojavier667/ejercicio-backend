@@ -6,6 +6,7 @@ import com.mycompany.ejercicio.cxf.exception.RoleException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +23,13 @@ public class RoleDAOImpl implements RoleDAO {
     private ModelMapper modelMapper;
 
     @Override
-    public Role findByName(String name) {
+    public Role findByName(String name) throws RoleExcepction {
         RoleEntity re = this.roleRepository.findByName(name);
+
+        if(re == null){
+            throw new RoleExcepction("Role with name " + name + " not found!", new RoleException());
+        }
+
         Role role = this.convertToDto(re);
 
         return role;
@@ -42,6 +48,9 @@ public class RoleDAOImpl implements RoleDAO {
 
         try {
             this.roleRepository.save(roleEntity);
+        }
+        catch (DataIntegrityViolationException dive){
+            throw new RoleExcepction("A role with that name already exists.", new RoleException());
         }
         catch (Exception e){
             throw new RoleExcepction("Error saving role", new RoleException());

@@ -26,7 +26,7 @@ public class RoleServiceRestEndpoint {
     }
 
     @GetMapping(value = "/{name}")
-    public Role getRoleByName(@PathVariable String name){
+    public Role getRoleByName(@PathVariable String name) throws RoleExcepction {
         return roleDAO.findByName(name);
     }
 

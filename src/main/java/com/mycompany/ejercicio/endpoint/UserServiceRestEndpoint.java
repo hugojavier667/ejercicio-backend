@@ -26,7 +26,7 @@ public class UserServiceRestEndpoint {
     }
 
     @GetMapping(value = "/{login}")
-    public User getUserByLogin(@PathVariable String login){
+    public User getUserByLogin(@PathVariable String login) throws UserExcepction {
         return userDAO.findByLogin(login);
     }
 

@@ -1,5 +1,6 @@
 package com.mycompany.ejercicio.endpoint;
 
+import com.mycompany.ejercicio.cxf.UserExcepction;
 import com.mycompany.ejercicio.cxf.datatypes.ArrayOfUser;
 import com.mycompany.ejercicio.cxf.datatypes.User;
 import com.mycompany.ejercicio.cxf.user.*;
@@ -19,7 +20,7 @@ public class UserServiceController {
     @Autowired
     private ModelMapper modelMapper;
 
-    public GetUserByLoginResponse getUserByLogin(UserRequest userRequest) {
+    public GetUserByLoginResponse getUserByLogin(UserRequest userRequest) throws UserExcepction {
 
         UserReturn rr = new UserReturn();
         String login = userRequest.getLogin();

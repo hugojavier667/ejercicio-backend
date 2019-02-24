@@ -1,0 +1,51 @@
+﻿{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {},
+    "definitions": {
+        "User": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "login": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "roles": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/Role"
+                    }
+                }
+            },
+            "required": [
+                "login",
+                "email",
+                "name"
+            ]
+        },
+        "Role": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "description"
+            ]
+        }
+    }
+}

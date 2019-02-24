@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RoleDAO {
 
-    Role findByName(String name);
+    Role findByName(String name) throws RoleExcepction;
 
     List<Role> findAll();
 
