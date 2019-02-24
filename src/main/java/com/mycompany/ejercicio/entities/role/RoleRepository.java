@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface RoleRepository extends CrudRepository<RoleEntity, Integer> {
@@ -19,4 +20,6 @@ public interface RoleRepository extends CrudRepository<RoleEntity, Integer> {
     @Transactional
     @Modifying
     int deleteByName(String name);
+
+    List<RoleEntity> findAllByNameIn(List<String> rolesNames);
 }

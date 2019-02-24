@@ -7,6 +7,7 @@
 			<s:element name="login" type="s:string"/>
 			<s:element name="email" type="s:string"/>
 			<s:element name="name" type="s:string"/>
+			<s:element name="roles" type="Role" maxOccurs="unbounded"/>
 		</s:sequence>
 	</s:complexType>
 	<s:complexType name="Role">
