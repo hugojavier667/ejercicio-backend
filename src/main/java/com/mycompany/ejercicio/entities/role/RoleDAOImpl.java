@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Profile("db")
+@Profile({"db","default"})
 public class RoleDAOImpl implements RoleDAO {
 
     @Autowired
