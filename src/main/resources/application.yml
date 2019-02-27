@@ -15,4 +15,6 @@
 spring:
     application:
         name: Ejercicio
+    profiles:
+      active: db
 

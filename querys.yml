@@ -1,0 +1,3 @@
+findAllUsers: SELECT * FROM users
+findUserByLogin: SELECT * FROM users u WHERE u.login = (?)
+insertUser: INSERT INTO user (login,name,email) VALUES (?,?,?)

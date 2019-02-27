@@ -5,16 +5,17 @@ import com.mycompany.ejercicio.cxf.UserExcepction;
 import com.mycompany.ejercicio.cxf.datatypes.Role;
 import com.mycompany.ejercicio.cxf.datatypes.User;
 import com.mycompany.ejercicio.cxf.exception.UserException;
+import com.mycompany.ejercicio.entities.QuerysConfiguration;
 import com.mycompany.ejercicio.entities.role.RoleEntity;
 import com.mycompany.ejercicio.entities.role.RoleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    QuerysConfiguration querysConfiguration;
 
     @Override
     public User findByLogin(String login) throws UserExcepction {
