@@ -27,11 +27,11 @@
 	<wsdl:message name="MensajeNuevo">
 		<wsdl:part name="parameter" type="xs:string"/>
 	</wsdl:message>
-	<wsdl:message name="UserExcepction">
-		<wsdl:part name="parameter" element="exception:UserException"/>
+	<wsdl:message name="UserException">
+		<wsdl:part name="parameter" element="exception:GenericException"/>
 	</wsdl:message>
 	<wsdl:message name="RoleExcepction">
-		<wsdl:part name="parameter" element="exception:RoleException"/>
+		<wsdl:part name="parameter" element="exception:GenericException"/>
 	</wsdl:message>
 	<wsdl:message name="DeleteUserSoapIn">
 		<wsdl:part name="parameter" element="user:DeleteUser"/>
@@ -75,30 +75,38 @@
 	<wsdl:message name="UpdateRoleSoapOut">
 		<wsdl:part name="parameter" element="role:UpdateRoleResponse"/>
 	</wsdl:message>
+	<wsdl:message name="DataAccessException">
+		<wsdl:part name="parameter" element="exception:GenericException"/>
+	</wsdl:message>
 	<wsdl:portType name="UserServiceSoapPortType">
 		<wsdl:operation name="UserDetails">
 			<wsdl:input message="tns:getUserDetailsSoapIn"/>
 			<wsdl:output message="tns:getUserDetailsSoapOut"/>
-			<wsdl:fault name="UserExcepction" message="tns:UserExcepction"/>
+			<wsdl:fault name="UserException" message="tns:UserException"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 		<wsdl:operation name="CreateUser">
 			<wsdl:input message="tns:createuserSoapIn"/>
 			<wsdl:output message="tns:createuserSoapOut"/>
-			<wsdl:fault name="UserExcepction" message="tns:UserExcepction"/>
+			<wsdl:fault name="UserException" message="tns:UserException"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 		<wsdl:operation name="DeleteUser">
 			<wsdl:input message="tns:DeleteUserSoapIn"/>
 			<wsdl:output message="tns:DeleteUserSoapOut"/>
-			<wsdl:fault name="UserExceptionr" message="tns:UserExcepction"/>
+			<wsdl:fault name="UserExceptionr" message="tns:UserException"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 		<wsdl:operation name="GetUsers">
 			<wsdl:input message="tns:GetUsersSoapIn"/>
 			<wsdl:output message="tns:GetUsersSoapOut"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 		<wsdl:operation name="UpdateUser">
 			<wsdl:input message="tns:UpdateUserSoapIn"/>
 			<wsdl:output message="tns:UpdateUserSoapOut"/>
-			<wsdl:fault name="UserException" message="tns:UserExcepction"/>
+			<wsdl:fault name="UserException" message="tns:UserException"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:portType name="RoleServiceSoapPortType">
@@ -106,25 +114,30 @@
 			<wsdl:input message="tns:getRoleDetailsSoapIn"/>
 			<wsdl:output message="tns:getRoleDetailsSoapOut"/>
 			<wsdl:fault name="RoleExcepction" message="tns:RoleExcepction"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 		<wsdl:operation name="CreateRole">
 			<wsdl:input message="tns:CreateRoleSoapIn"/>
 			<wsdl:output message="tns:CreateRoleSoapOut"/>
 			<wsdl:fault name="RoleException" message="tns:RoleExcepction"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 		<wsdl:operation name="DeleteRole">
 			<wsdl:input message="tns:DeleteRoleSoapIn"/>
 			<wsdl:output message="tns:DeleteRoleSoapOut"/>
 			<wsdl:fault name="RoleExcepction" message="tns:RoleExcepction"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 		<wsdl:operation name="GetRoles">
 			<wsdl:input message="tns:GetRolesSoapIn"/>
 			<wsdl:output message="tns:GetRolesSoapOut"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 		<wsdl:operation name="UpdateRole">
 			<wsdl:input message="tns:UpdateRoleSoapIn"/>
 			<wsdl:output message="tns:UpdateRoleSoapOut"/>
 			<wsdl:fault name="RoleException" message="tns:RoleExcepction"/>
+			<wsdl:fault name="DataAccessException" message="tns:DataAccessException"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="UserServiceSoapBinding" type="tns:UserServiceSoapPortType">
@@ -137,8 +150,11 @@
 			<wsdl:output>
 				<soap:body use="literal"/>
 			</wsdl:output>
-			<wsdl:fault name="UserExcepction">
-				<soap:fault name="UserExcepction" use="literal"/>
+			<wsdl:fault name="UserException">
+				<soap:fault name="UserException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
 			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="UserDetails">
@@ -149,8 +165,11 @@
 			<wsdl:output>
 				<soap:body use="literal"/>
 			</wsdl:output>
-			<wsdl:fault name="UserExcepction">
-				<soap:fault name="UserExcepction" use="literal"/>
+			<wsdl:fault name="UserException">
+				<soap:fault name="UserException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
 			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="DeleteUser">
@@ -164,6 +183,9 @@
 			<wsdl:fault name="UserExceptionr">
 				<soap:fault name="UserExceptionr" use="literal"/>
 			</wsdl:fault>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
+			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="GetUsers">
 			<soap:operation soapAction="urn:#GetUsers" style="document"/>
@@ -173,6 +195,9 @@
 			<wsdl:output>
 				<soap:body use="literal"/>
 			</wsdl:output>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
+			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="UpdateUser">
 			<soap:operation soapAction="urn:#UpdateUser" style="document"/>
@@ -184,6 +209,9 @@
 			</wsdl:output>
 			<wsdl:fault name="UserException">
 				<soap:fault name="UserException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
 			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
@@ -200,6 +228,9 @@
 			<wsdl:fault name="RoleExcepction">
 				<soap:fault name="RoleExcepction" use="literal"/>
 			</wsdl:fault>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
+			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="CreateRole">
 			<soap:operation soapAction="urn:#CreateRole" style="document"/>
@@ -211,6 +242,9 @@
 			</wsdl:output>
 			<wsdl:fault name="RoleException">
 				<soap:fault name="RoleException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
 			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="DeleteRole">
@@ -224,6 +258,9 @@
 			<wsdl:fault name="RoleExcepction">
 				<soap:fault name="RoleExcepction" use="literal"/>
 			</wsdl:fault>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
+			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="GetRoles">
 			<soap:operation soapAction="urn:#GetRoles" style="document"/>
@@ -233,9 +270,12 @@
 			<wsdl:output>
 				<soap:body use="literal"/>
 			</wsdl:output>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
+			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="UpdateRole">
-			<soap:operation soapAction="urn:#UpdateRole"/>
+			<soap:operation soapAction="urn:#UpdateRole" style="document"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>
@@ -244,6 +284,9 @@
 			</wsdl:output>
 			<wsdl:fault name="RoleException">
 				<soap:fault name="RoleException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="DataAccessException">
+				<soap:fault name="DataAccessException" use="literal"/>
 			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>

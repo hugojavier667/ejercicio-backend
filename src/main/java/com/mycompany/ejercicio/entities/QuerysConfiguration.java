@@ -43,4 +43,8 @@ public class QuerysConfiguration {
             this.querys.put((String) entry.getKey(), (String) entry.getValue());
         }
     }
+
+    public String getQueryByKey(String key){
+        return this.querys.get(key);
+    }
 }

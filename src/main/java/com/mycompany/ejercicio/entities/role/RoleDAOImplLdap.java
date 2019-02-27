@@ -23,6 +23,11 @@ public class RoleDAOImplLdap implements RoleDAO {
     }
 
     @Override
+    public List<Role> findAllByUserLogin(String login) {
+        return null;
+    }
+
+    @Override
     public Role save(Role role) throws RoleExcepction {
         return null;
     }

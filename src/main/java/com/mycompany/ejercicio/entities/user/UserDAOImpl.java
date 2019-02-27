@@ -1,119 +1,196 @@
 package com.mycompany.ejercicio.entities.user;
 
-import com.fasterxml.jackson.databind.ser.std.CollectionSerializer;
-import com.mycompany.ejercicio.cxf.UserExcepction;
+import com.mycompany.ejercicio.cxf.DataAccessException;
+import com.mycompany.ejercicio.cxf.UserException;
 import com.mycompany.ejercicio.cxf.datatypes.Role;
 import com.mycompany.ejercicio.cxf.datatypes.User;
-import com.mycompany.ejercicio.cxf.exception.UserException;
+import com.mycompany.ejercicio.cxf.exception.GenericException;
 import com.mycompany.ejercicio.entities.QuerysConfiguration;
-import com.mycompany.ejercicio.entities.role.RoleEntity;
-import com.mycompany.ejercicio.entities.role.RoleRepository;
-import org.modelmapper.ModelMapper;
+import com.mycompany.ejercicio.entities.role.RoleDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserDAOImpl implements UserDAO {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     QuerysConfiguration querysConfiguration;
 
-    @Override
-    public User findByLogin(String login) throws UserExcepction {
-        UserEntity userEntity = this.userRepository.findByLogin(login);
-        if(userEntity == null){
-           throw new UserExcepction("User with login " + login + " not found!", new UserException());
-        }
+    @PersistenceContext
+    EntityManager entityManager;
 
-        User user = this.convertToDto(userEntity);
-        return user;
-    }
+    @Autowired
+    RoleDAO roleDAO;
 
     @Override
-    public List<User> findAll() {
-        List<UserEntity> reList = (List) this.userRepository.findAll();
-
-        return reList.stream().map(userEntity -> this.convertToDto(userEntity)).collect(Collectors.toList());
-    }
-
-    @Override
-    public User save(User user) throws UserExcepction {
-        UserEntity userEntity = this.convertToEntity(user);
+    public User findByLogin(String login) throws UserException, DataAccessException {
+        String sql = querysConfiguration.getQueryByKey("findUserByLogin");
 
         try {
-            this.userRepository.save(userEntity);
-            List<RoleEntity> roles = this.roleRepository.findAllByNameIn(user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toList()));
-            roles.forEach(roleEntity -> userEntity.addRole(roleEntity));
-            this.userRepository.save(userEntity);
-        }
-        catch (DataIntegrityViolationException dive){
-            throw new UserExcepction("A user with that login already exists.", new UserException());
-        }
-        catch (Exception e) {
-            throw new UserExcepction("Error saving user", new UserException());
-        }
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, login);
 
-        return this.convertToDto(userEntity);
-    }
+            User user = buildUser((Object[]) query.getSingleResult());
+            user.getRoles().addAll(roleDAO.findAllByUserLogin(user.getLogin()));
 
-    @Override
-    public int deleteByLogin(String login) {
-        return this.userRepository.deleteByLogin(login);
-    }
-
-    @Override
-    public User update(User user) throws UserExcepction {
-        UserEntity userEntity = this.userRepository.findByLogin(user.getLogin());
-
-        if (user == null) {
-            throw new UserExcepction("User login does not exists", new UserException());
-        }
-
-        userEntity.setName(user.getName());
-        userEntity.setEmail(user.getEmail());
-
-        List<RoleEntity> roles = this.roleRepository.findAllByNameIn(user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toList()));
-        userEntity.setRoles(new HashSet<>());
-        roles.forEach(roleEntity -> userEntity.addRole(roleEntity));
-
-        try {
-            this.userRepository.save(userEntity);
+            return user;
         } catch (Exception e) {
-            throw new UserExcepction("Error updating user", new UserException());
+            e.printStackTrace();
+            throw new DataAccessException("Error querying the database", new GenericException());
+        }
+    }
+
+    @Override
+    public List<User> findAll() throws DataAccessException {
+        String sql = querysConfiguration.getQueryByKey("findAllUsers");
+        List<User> results = new ArrayList<>();
+        try {
+            Query query = entityManager.createNativeQuery(sql);
+
+            query.getResultList().stream().forEach(resultRow -> {
+                User user = buildUser((Object[]) resultRow);
+
+                try {
+                    user.getRoles().addAll(roleDAO.findAllByUserLogin(user.getLogin()));
+                } catch (DataAccessException e) {
+                    e.printStackTrace();
+                }
+
+                results.add(user);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error querying the database", new GenericException());
+        }
+
+        return results;
+    }
+
+    @Override
+    @Modifying
+    @Transactional
+    public User save(User user) throws UserException, DataAccessException {
+        String sql = querysConfiguration.getQueryByKey("insertUser");
+
+        try {
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, user.getLogin());
+            query.setParameter(2, user.getName());
+            query.setParameter(3, user.getEmail());
+
+            query.executeUpdate();
+
+            clearAllRolesToUserByLogin(user.getLogin());
+            user.getRoles().stream().forEach(role -> {
+                try {
+                    addRoleToUserByLogin(user.getLogin(), role.getName());
+                } catch (DataAccessException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error querying the database", new GenericException());
         }
 
         return user;
     }
 
-    private User convertToDto(UserEntity userEntity) {
-        User user = modelMapper.map(userEntity, User.class);
+    @Override
+    @Modifying
+    @Transactional
+    public int deleteByLogin(String login) throws DataAccessException {
+        String sql = querysConfiguration.getQueryByKey("deleteUserByLogin");
 
-        user.getRoles().addAll(userEntity.getRoles().stream().map(roleEntity -> {
-            Role role = modelMapper.map(roleEntity, Role.class);
-            return role;
-        }).collect(Collectors.toList()));
+        try {
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, login);
+
+            return query.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error querying the database", new GenericException());
+        }
+    }
+
+    @Override
+    @Modifying
+    @Transactional
+    public User update(User user) throws UserException, DataAccessException {
+        String sql = querysConfiguration.getQueryByKey("updateUserByLogin");
+
+        try {
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, user.getName());
+            query.setParameter(2, user.getEmail());
+            query.setParameter(3, user.getLogin());
+
+            query.executeUpdate();
+
+            clearAllRolesToUserByLogin(user.getLogin());
+            user.getRoles().stream().forEach(role -> {
+                try {
+                    addRoleToUserByLogin(user.getLogin(), role.getName());
+                } catch (DataAccessException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error querying the database", new GenericException());
+        }
 
         return user;
     }
 
-    private UserEntity convertToEntity(User user) {
-        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
-        userEntity.setRoles(new HashSet<>());
-        return userEntity;
+    @Override
+    @Modifying
+    @Transactional
+    public int clearAllRolesToUserByLogin(String login) throws DataAccessException {
+        String sql = querysConfiguration.getQueryByKey("clearAllRolesToUserByLogin");
+
+        try {
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, login);
+
+            return query.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error querying the database", new GenericException());
+        }
+    }
+
+    @Override
+    @Modifying
+    @Transactional
+    public int addRoleToUserByLogin(String login, String roleName) throws DataAccessException {
+        String sql = querysConfiguration.getQueryByKey("addRolToUserByLogin");
+
+        try {
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, login);
+            query.setParameter(2, roleName);
+
+            return query.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error querying the database", new GenericException());
+        }
+    }
+
+    private User buildUser(Object[] fields){
+        User user = new User();
+        user.setLogin((String) fields[0]);
+        user.setName((String) fields[1]);
+        user.setEmail((String) fields[2]);
+
+        return user;
     }
 }

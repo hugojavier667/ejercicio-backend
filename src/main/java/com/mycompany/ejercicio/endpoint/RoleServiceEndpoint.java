@@ -1,5 +1,6 @@
 package com.mycompany.ejercicio.endpoint;
 
+import com.mycompany.ejercicio.cxf.DataAccessException;
 import com.mycompany.ejercicio.cxf.RoleExcepction;
 import com.mycompany.ejercicio.cxf.RoleServiceSoapPortType;
 import com.mycompany.ejercicio.cxf.role.*;
@@ -11,7 +12,7 @@ public class RoleServiceEndpoint implements RoleServiceSoapPortType {
     private RoleServiceController roleServiceController;
 
     @Override
-    public GetRoleByNameResponse roleDetails(GetRoleByName parameters) throws RoleExcepction {
+    public GetRoleByNameResponse roleDetails(GetRoleByName parameters) throws RoleExcepction, DataAccessException {
         return roleServiceController.getRoleByName(parameters.getRoleRequest());
     }
 
@@ -21,12 +22,12 @@ public class RoleServiceEndpoint implements RoleServiceSoapPortType {
     }
 
     @Override
-    public DeleteRoleReturn deleteRole(DeleteRoleRequest deleteRoleRequest) throws RoleExcepction {
+    public DeleteRoleReturn deleteRole(DeleteRoleRequest deleteRoleRequest) throws RoleExcepction, DataAccessException {
         return this.roleServiceController.deleteRoleByName(deleteRoleRequest);
     }
 
     @Override
-    public RolesReturn getRoles() {
+    public RolesReturn getRoles() throws DataAccessException {
         return this.roleServiceController.getRoles();
     }
 

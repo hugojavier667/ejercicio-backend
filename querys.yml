@@ -1,3 +1,14 @@
-findAllUsers: SELECT * FROM users
-findUserByLogin: SELECT * FROM users u WHERE u.login = (?)
-insertUser: INSERT INTO user (login,name,email) VALUES (?,?,?)
+findAllUsers: SELECT u.login, u.name, u.email FROM users u
+findUserByLogin: SELECT u.login, u.name, u.email FROM users u WHERE u.login = (?)
+insertUser: INSERT INTO users (login,name,email) VALUES (?,?,?)
+updateUserByLogin: UPDATE users SET name=?,email=? WHERE login = ?
+deleteUserByLogin: DELETE FROM users WHERE login = ?
+clearAllRolesToUserByLogin: DELETE FROM users_roles WHERE user_id = (SELECT id FROM users WHERE login = ?)
+addRolToUserByLogin: INSERT INTO users_roles (user_id, role_id) VALUES ((SELECT id FROM users WHERE login = ?),(SELECT id FROM roles WHERE name = ?))
+
+findAllRoles: SELECT r.name, r.description FROM roles r
+findAllRolesByUserLogin: SELECT r.name, r.description FROM roles r INNER JOIN users_roles ur ON ur.role_id = r.id INNER JOIN users u ON ur.user_id = u.id WHERE u.login = ?
+findRoleByName: SELECT r.name, r.description FROM roles r WHERE r.name = (?)
+insertRole: INSERT INTO roles (name, description) VALUES (?,?)
+updateRoleByName: UPDATE roles SET description=? WHERE name = ?
+deleteRoleByName: DELETE FROM roles WHERE name = ?

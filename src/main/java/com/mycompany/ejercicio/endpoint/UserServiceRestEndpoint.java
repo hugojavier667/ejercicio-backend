@@ -1,6 +1,7 @@
 package com.mycompany.ejercicio.endpoint;
 
-import com.mycompany.ejercicio.cxf.UserExcepction;
+import com.mycompany.ejercicio.cxf.DataAccessException;
+import com.mycompany.ejercicio.cxf.UserException;
 import com.mycompany.ejercicio.cxf.datatypes.User;
 import com.mycompany.ejercicio.entities.user.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +17,27 @@ public class UserServiceRestEndpoint {
     UserDAO userDAO;
 
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() throws DataAccessException {
         return userDAO.findAll();
     }
 
     @PostMapping
-    public User saveUser(@RequestBody User user) throws UserExcepction {
+    public User saveUser(@RequestBody User user) throws UserException, DataAccessException {
         return userDAO.save(user);
     }
 
     @GetMapping(value = "/{login}")
-    public User getUserByLogin(@PathVariable String login) throws UserExcepction {
+    public User getUserByLogin(@PathVariable String login) throws UserException, DataAccessException {
         return userDAO.findByLogin(login);
     }
 
     @PatchMapping
-    public User updateUser(@RequestBody User user) throws UserExcepction {
+    public User updateUser(@RequestBody User user) throws UserException, DataAccessException {
         return userDAO.update(user);
     }
 
     @DeleteMapping(value = "/{login}")
-    public int deleteUserByLogin(@PathVariable String login){
+    public int deleteUserByLogin(@PathVariable String login) throws DataAccessException {
         return userDAO.deleteByLogin(login);
     }
 }

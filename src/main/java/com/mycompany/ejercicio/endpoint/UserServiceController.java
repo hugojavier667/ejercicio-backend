@@ -1,6 +1,7 @@
 package com.mycompany.ejercicio.endpoint;
 
-import com.mycompany.ejercicio.cxf.UserExcepction;
+import com.mycompany.ejercicio.cxf.DataAccessException;
+import com.mycompany.ejercicio.cxf.UserException;
 import com.mycompany.ejercicio.cxf.datatypes.ArrayOfUser;
 import com.mycompany.ejercicio.cxf.datatypes.User;
 import com.mycompany.ejercicio.cxf.user.*;
@@ -20,7 +21,7 @@ public class UserServiceController {
     @Autowired
     private ModelMapper modelMapper;
 
-    public GetUserByLoginResponse getUserByLogin(UserRequest userRequest) throws UserExcepction {
+    public GetUserByLoginResponse getUserByLogin(UserRequest userRequest) throws UserException, DataAccessException {
 
         UserReturn rr = new UserReturn();
         String login = userRequest.getLogin();
@@ -41,7 +42,7 @@ public class UserServiceController {
         return getUserByIdResponse;
     }
 
-    public UsersReturn getUsers() {
+    public UsersReturn getUsers() throws DataAccessException {
 
         List<User> userList = userDAO.findAll();
         UsersReturn rr = new UsersReturn();
@@ -73,7 +74,7 @@ public class UserServiceController {
         return addUserResponse;
     }
 
-    DeleteUserReturn deleteUserByLogin(DeleteUserRequest deleteUserRequest) {
+    DeleteUserReturn deleteUserByLogin(DeleteUserRequest deleteUserRequest) throws DataAccessException {
 
         String login = deleteUserRequest.getLogin();
         int affectedRows = this.userDAO.deleteByLogin(login);

@@ -1,5 +1,6 @@
 package com.mycompany.ejercicio.endpoint;
 
+import com.mycompany.ejercicio.cxf.DataAccessException;
 import com.mycompany.ejercicio.cxf.RoleExcepction;
 import com.mycompany.ejercicio.cxf.datatypes.ArrayOfRole;
 import com.mycompany.ejercicio.cxf.datatypes.Role;
@@ -16,7 +17,7 @@ public class RoleServiceController {
     @Autowired
     private RoleDAO roleDAO;
 
-    public GetRoleByNameResponse getRoleByName(RoleRequest roleRequest) throws RoleExcepction {
+    public GetRoleByNameResponse getRoleByName(RoleRequest roleRequest) throws RoleExcepction, DataAccessException {
 
         RoleReturn rr = new RoleReturn();
         String name = roleRequest.getName();
@@ -37,7 +38,7 @@ public class RoleServiceController {
         return getRoleByIdResponse;
     }
 
-    public RolesReturn getRoles() {
+    public RolesReturn getRoles() throws DataAccessException {
 
         List<Role> roleList = roleDAO.findAll();
         RolesReturn rr = new RolesReturn();
@@ -69,7 +70,7 @@ public class RoleServiceController {
         return addRoleResponse;
     }
 
-    DeleteRoleReturn deleteRoleByName(DeleteRoleRequest deleteRoleRequest) {
+    DeleteRoleReturn deleteRoleByName(DeleteRoleRequest deleteRoleRequest) throws DataAccessException {
 
         String name = deleteRoleRequest.getName();
         int affectedRows = this.roleDAO.deleteByName(name);
